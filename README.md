@@ -2,20 +2,13 @@
 
 The front end for this project was made with patternlab, handlebars, bootstrap, slick, jquery validate, and matchheight.
 
-[Folder Structure](#folder-structure)
-[Patterns](#patterns)
-[Assets](#assets)
-[Css](#css)
-[Scss](#scss)
-[Js](#js)
-
 In the project directory, run  `npm install`.
 
 Once everything is installed, you can run a local instance of patternlab (our component library) with `gulp develop`
 
 The page will automatically open in your browser, and will refresh if you make any changes to the `scss`,`js`, or `hbs` files. Eslint has been enabled and will show any lint errors in the console.
 
-## Folder Structure {#folder-structure}
+## :file_folder: Folder Structure
 
 All of our front end files live within `/Isagenix-Patternlab`, specifically `/source`. 
 
@@ -72,7 +65,8 @@ All of our front end files live within `/Isagenix-Patternlab`, specifically `/so
 |   +-- package.json
 ```
 
-### :file_folder: /patterns {#patterns}
+### /patterns
+
 `/patterns` contains all of our atoms, components and pages.
 
 `/00-atoms` is comprised of branding/system colors, buttons, and headings
@@ -81,14 +75,16 @@ All of our front end files live within `/Isagenix-Patternlab`, specifically `/so
 
 `/02-pages` are mock up site pages that contain multiple components, e.g. the `cart.hbs` page is importing the `header.hbs`, `cart.hbs`,`cartSidebar.hbs`, and `footer.hbs`  
 
-### :file_folder: /assets {#assets}
+### /assets
+
 `/assets` contains icons, images for patternlab.  
 
-### :file_folder: /css {#css}
+### /css 
+
 `/css` contains site styling divided into different folders
 
+### /scss
 
-### :open_file_folder: /scss {#scss}
 `/scss` contains site styling divided into different folders, `/scss`, `/iframe`, and `/webfonts`
 
 :exclamation: Note: `/iframe` contains css for the **Add Credit Card** modal in checkout.
@@ -130,8 +126,53 @@ Files of note:
 - `app.scss` imports all the scss files insode of `/scss` and outputs it into its sister file `app.css`
 - `bootstrap.min.css` is bootstraps css file.
 
-### :file_folder: /js {#js}
+### /js
+
+`/js` consists of js files structured into different folders, e.g. `/base`, `/bundles`, `/helpers`, `/services`, `/utils`,
+`/vendor`
+
+### /base 
+
+`/base` has one file called `baseClasses.js`, these are global const variables that are used mutiple times across different js files like IS_ACTIVE, IS_HIDDEN, IS_VALID
+
+### /bundles 
+
+Similar to the scss bundles, `/bundles` holds files that are page specific, e.g., `/cartBundle.js` holds cart related js
+```
+import '../../_patterns/01-components/cart/cart';
+import '../../_patterns/01-components/cartModal/cartModal';
+import '../../_patterns/01-components/cartToggle/cartToggle';
+import '../../_patterns/01-components/cart-coupon/cart-coupon';
+```
+
+### /helpers
+
+The files in `/helpers` are handlebars helpers.
+
+- `ifeq.js`  determines if string is equal to json property. In the example below, we are checking if displaytype is equal to 'Range'.
+
+```
+ {{#ifeq ../DisplayType "Range" }}
+ 	if so, do range stuff
+ {{/ifeq}}
+```
+
+- `stripSpecialChar.js`  replaces special characters with an '-'.
+
+```
+"{{ stripSpecialChar Name }}">
+```
+
+### /services
+These are mostly calls to sitecore API for cart, inventory, country, etc.
+
+### /vendor 
+
+Third party js files like bootstrap, jquery, slick, and more
+
 
 ### :construction: /fonts, /icons, /images, /static, /styleguide 
 
 These hold default patternlab icons, images, etc. 
+
+## Adding a new component

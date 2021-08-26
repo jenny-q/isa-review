@@ -160,7 +160,7 @@ The files in `/helpers` are handlebars helpers.
 - `stripSpecialChar.js`  replaces special characters with an '-'.
 
 ```
-"{{ stripSpecialChar Name }}">
+{{ stripSpecialChar Name }}
 ```
 
 ### /services

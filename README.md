@@ -268,3 +268,40 @@ There are other exceptions, but the rest of the product block is pretty straight
 ```
 
 ## Loading Partials on Templates
+
+Some components render data from sitecore, and don't need partials. Ask your lead and make sure you have all the requirements before starting.
+
+Some components use json to display data. Below is an example with the product template and productHeader.hbs
+The json lives in the parent component that holds the partials, product has an attribute called data-product-details.
+
+```
+<section class="product" data-product-details='{ json data }'>
+```
+
+In the `product.js`
+
+```
+import productHeader from './partials/productHeader.hbs';
+
+// load partials
+function loadHeader() {
+    let $product = $('.product');
+    let productData = $product.data('product-details');
+    let productHeaderHtml = productHeader(productData);
+    $productHeading.append(productHeaderHtml);
+}
+```
+
+```
+<h1 class="product__header">
+    {{#ifeq ProductType 'Bundle'}}
+        {{# Products}}
+            {{ Name }}
+        {{/ Products}}
+    {{else}}
+        {{# ProductFamily}}
+            {{ Name }}
+        {{/ ProductFamily}}
+    {{/ifeq}}
+</h1>
+```

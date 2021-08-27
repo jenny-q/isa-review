@@ -176,3 +176,95 @@ Third party js files like bootstrap, jquery, slick, and more
 These hold default patternlab icons, images, etc. 
 
 ## Adding a new component
+
+Create a new folder under `/01-components`  with the name of your component. The hbs and js file should match the name of your folder
+```
++-- /01-components
+|   +-- /accordion
+|   |   +-- accordion.hbs
+|   |   +-- accordion.js
+|   +-- /breadcrumbs
+|   |   +-- breadcrumbs.hbs
+|   |   +-- breadcrumbs.js
+```
+Some components will have to be broken down into [partials](https://handlebarsjs.com/guide/partials.html), in this situation, create a new partials folder inside your component folder. The product component is a great example:
+```
++-- /01-components
+|   +-- /product
+|   |   +-- product.hbs
+|   |   +-- product.js
+|   |   +-- /partials
+|   |   |   +-- productDescription.hbs
+|   |   |   +-- productPrice.hbs
+```
+The scss file for your component should be saved under `/css/scss/components/componentName.scss` as well as the corresponding bundle, e.g. if its a globally used component like breadcrumb, add it to the globalBundle.scss.
+```
++-- /source
+|   +-- /patterns
+|   |   +-- /00-atoms
+|   |   +-- /01-components
+|   +-- /css
+|   |   +-- /scss
+|   |   |   +-- /components
+|   |   |   |   +-- accordion.scss
+|   |   |   |   +-- breadcrumbs.scss
+|   |   |   +-- /bundles
+|   |   |   |   +-- globalBundle.scss
+|   |   |   |   +--cartBundle.scss
+```
+
+## Using BEM in scss
+
+Writing scss using BEM is an efficient and clean way to create styling for the site. BEM stands for **block__element--modifier**. 
+A block can be many things, e.g. `header, container, footer`. It can also be something as small as a `button`.
+
+Using the button example, the class .button and .button-primary is our block, our modifiers are --hover, --disabled, etc. In this case, we would use **block--modifier-value** syntax.
+
+This site has four types of buttons with multiple states.
+
+```
+button button-primary
+button button-secondary
+button button-tertiary
+button button-arrow
+button button-primary button-primary--disabled 
+```
+
+Product is a great example of a large block element. The class product envelops the entire product page structure. The product page also hosts multiple partials that load depending on the page type (e.g. kit, kit as a product, pack, single facet, multi facet).
+
+The product page is broken up into multiple elements. Some of these don't have the .`product` block name. That is because they are their own blocks, and the product page version is a modifer of that block. An example of this is the `isa-modal` component.
+
+`.isa-modal` is its own component, and it is used globally on the site. There are only minor differences for the gallery pop-up, so instead of creating a new class `.product-gallery__modal`, we are using `.isa-modal .isa-modal--gallery` as the modifer. That way we don't have to create duplicate modal scss styling in the product-gallery scss file, we just add the changes in the `isa-modal.scss` file
+
+```
+.isa-modal {
+	//global styles here
+
+	//gallery specific styling
+    &--gallery {
+        position: fixed;
+        top: 0;
+        left: 0;
+        visibility: hidden;
+        z-index: 1050;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        outline: 0;
+        background: rgba($turquoiseDark, .8);
+```
+
+There are other exceptions, but the rest of the product block is pretty straight forward.
+
+```
+.product
+	.container // bootstrap class, most, if not all pages use this class to wrap content
+		.product__heading // product header
+		.product__details-subheader //reviews and share
+		.product__row
+			.product-gallery
+			.product__details
+				.product__dietary-restrictions			
+```
+
+## Loading Partials on Templates

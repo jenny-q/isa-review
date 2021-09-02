@@ -418,7 +418,7 @@ Checks the description height on facet click. Some products have longer descript
 
 `$body.on('click', '.product__input', checkHeight);`
 
-:exclamation: Sometimes there is some sitecore code that breaks clib, I just wrap in this to check if it is in patternlab. This will only run on a sitecore environment.
+:exclamation: There are some functions that break clib, in that case I check for body class.
 
 ```
 if(!$body.hasClass('patternlab__body')) {
